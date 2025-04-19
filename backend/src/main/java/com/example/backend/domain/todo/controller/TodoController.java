@@ -58,4 +58,10 @@ public class TodoController {
         todoService.delete(id);
         return new BaseResponse<>(BaseResponseCode.TODO_DELETED);
     }
+
+    @PatchMapping("/reorder")
+    public BaseResponse<Void> reorder(@RequestBody List<Long> orderedIds) {
+        todoService.reorder(orderedIds);
+        return new BaseResponse<>(BaseResponseCode.TODO_REORDERED);
+    }
 }

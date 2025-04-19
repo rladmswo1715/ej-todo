@@ -18,4 +18,5 @@ public class TodoRes {
     private boolean completed;
     private LocalDateTime createdAt;
     private LocalDateTime completedAt;
+    private Integer order;
 }

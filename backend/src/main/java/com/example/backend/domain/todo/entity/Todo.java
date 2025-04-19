@@ -24,6 +24,9 @@ public class Todo {
 
     private LocalDateTime completedAt;
 
+    @Column(name = "todo_order")
+    private Integer order;
+
     @PrePersist
     protected void onCreate() {
         this.createdAt = LocalDateTime.now();

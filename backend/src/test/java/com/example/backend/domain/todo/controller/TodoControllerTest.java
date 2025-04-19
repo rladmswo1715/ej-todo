@@ -14,6 +14,7 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
@@ -112,5 +113,16 @@ class TodoControllerTest {
         mockMvc.perform(patch("/api/todos/{id}/toggle", todoId))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data.completed").value(true));
+    }
+
+    @Test
+    @DisplayName("할 일 순서 재정렬 API - 200 OK")
+    void reorderTodos_success() throws Exception {
+        List<Long> orderIds = List.of(3L, 1L, 2L);
+
+        mockMvc.perform(patch("/api/todos/reorder")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(orderIds)))
+                .andExpect(status().isOk());
     }
 }

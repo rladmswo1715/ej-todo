@@ -13,6 +13,7 @@ public enum BaseResponseCode {
     TODO_TOGGLED(true, 1104, "할일 토글 성공", HttpStatus.OK),
     TODO_UPDATED(true, 1105, "할일 수정 성공", HttpStatus.OK),
     TODO_DELETED(true, 1106, "할일 삭제 성공", HttpStatus.OK),
+    TODO_REORDERED(true, 1107, "할일 순서 변경 성공", HttpStatus.OK),
 
     // todo 4100~
     TODO_NOT_FOUND(false, 4101, "할일 조회 실패", HttpStatus.NOT_FOUND),

@@ -10,6 +10,7 @@ import com.example.backend.global.common.response.BaseResponseCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,8 +32,11 @@ public class TodoService {
     }
 
     public TodoRes create(AddTodoReq req) {
+        Integer maxOrder = todoRepository.findMaxOrder().orElse(0);
+
         Todo todo = new Todo();
         todo.setTitle(req.getTitle());
+        todo.setOrder(maxOrder + 1);
 
         Todo saved = todoRepository.save(todo);
         return toTodoRes(saved);
@@ -65,6 +69,18 @@ public class TodoService {
                 .completed(todo.isCompleted())
                 .createdAt(todo.getCreatedAt())
                 .completedAt(todo.getCompletedAt())
+                .order(todo.getOrder())
                 .build();
+    }
+
+    public void reorder(List<Long> orderedIds) {
+        List<Todo> todosToSave = new ArrayList<>();
+        for (int i = 0; i < orderedIds.size(); i++) {
+            Todo todo = todoRepository.findById(orderedIds.get(i))
+                    .orElseThrow(() -> new CustomException(BaseResponseCode.TODO_NOT_FOUND));
+            todo.setOrder(i);
+            todosToSave.add(todo);
+        }
+        todoRepository.saveAll(todosToSave);
     }
 }
