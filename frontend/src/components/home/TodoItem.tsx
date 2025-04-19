@@ -2,12 +2,14 @@ import { CheckOutlined, DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { Button, Checkbox, Input, Popconfirm, Tag } from "antd";
 import type { InputRef } from "antd";
 import { useEffect, useRef, useState } from "react";
+import { TTodo } from "../../types/response/Todo";
+import toast from "react-hot-toast";
 
 interface TodoItemProps {
-  todo: any;
-  onToggle: () => void;
-  onDelete: () => void;
-  onUpdate: () => void;
+  todo: TTodo;
+  onToggle: (id: number) => void;
+  onDelete: (id: number) => void;
+  onUpdate: (id: number, title: string, onSuccess?: () => void) => void;
 }
 
 const TodoItem = ({ todo, onToggle, onDelete, onUpdate }: TodoItemProps) => {
@@ -25,10 +27,13 @@ const TodoItem = ({ todo, onToggle, onDelete, onUpdate }: TodoItemProps) => {
   };
 
   const submitEdit = () => {
-    if (!editValue.trim()) return;
-    onUpdate();
-    setIsEditing(false);
-    console.log("수정 완료");
+    if (!editValue.trim()) {
+      toast.error("내용을 입력해주세요.");
+      return;
+    }
+    onUpdate(todo.id, editValue.trim(), () => {
+      setIsEditing(false);
+    });
   };
 
   useEffect(() => {
@@ -41,7 +46,7 @@ const TodoItem = ({ todo, onToggle, onDelete, onUpdate }: TodoItemProps) => {
     <div className="flex items-center gap-2 w-full">
       <Checkbox
         checked={todo.completed}
-        onChange={() => onToggle()}
+        onChange={() => onToggle(todo.id)}
         disabled={isEditing}
       />
 
@@ -57,6 +62,7 @@ const TodoItem = ({ todo, onToggle, onDelete, onUpdate }: TodoItemProps) => {
                 cancelEdit();
               }
             }}
+            maxLength={25}
             className="flex-1"
           />
           <Button
@@ -82,7 +88,7 @@ const TodoItem = ({ todo, onToggle, onDelete, onUpdate }: TodoItemProps) => {
       {todo.completed && <Tag color="blue">완료</Tag>}
       <Popconfirm
         title="삭제하시겠습니까?"
-        onConfirm={() => onDelete()}
+        onConfirm={() => onDelete(todo.id)}
         okText="네"
         cancelText="아니요"
       >

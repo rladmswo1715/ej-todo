@@ -1,13 +1,23 @@
 import { Input, Button, Space } from "antd";
 import { useState } from "react";
+import { useTodoMutations } from "../../hooks/queries/mutate/useTodoMutations";
+import toast from "react-hot-toast";
 
 const AddTodoSection = () => {
   const [todoValue, setTodoValue] = useState("");
+  const { addMutation } = useTodoMutations();
 
   const addTodoHandler = () => {
-    if (!todoValue.trim()) return;
+    if (!todoValue.trim()) {
+      toast.error("내용을 입력해주세요.");
+      return;
+    }
 
-    console.log("할일 등록");
+    addMutation.mutate(todoValue, {
+      onSuccess: () => {
+        setTodoValue("");
+      },
+    });
   };
 
   return (

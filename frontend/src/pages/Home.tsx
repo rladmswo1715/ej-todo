@@ -6,7 +6,7 @@ const Home = () => {
   return (
     <InnerLayout className="pl-10 pr-4 py-4">
       <AddTodoSection />
-      <div className="mt-6 w-[80%] border" />
+      <div className="mt-6 border" />
       <ListSection />
     </InnerLayout>
   );
