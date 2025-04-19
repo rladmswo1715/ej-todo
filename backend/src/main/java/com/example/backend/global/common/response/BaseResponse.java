@@ -27,7 +27,7 @@ public class BaseResponse<T> {
     private final T data;
 
     public BaseResponse(BaseResponseCode code) {
-        this.success = false;
+        this.success = code.getSuccess();
         this.status = code.getHttpStatus().value();
         this.code = code.getCode();
         this.message = code.getMessage();
@@ -35,7 +35,7 @@ public class BaseResponse<T> {
     }
 
     public BaseResponse(BaseResponseCode code, T data) {
-        this.success = true;
+        this.success = code.getSuccess();
         this.status = code.getHttpStatus().value();
         this.code = code.getCode();
         this.message = code.getMessage();

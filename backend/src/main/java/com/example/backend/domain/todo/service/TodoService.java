@@ -50,7 +50,8 @@ public class TodoService {
                 .orElseThrow(() -> new CustomException(BaseResponseCode.TODO_NOT_FOUND));
 
         todo.setTitle(req.getTitle());
-        return toTodoRes(todo);
+        Todo updated = todoRepository.save(todo);
+        return toTodoRes(updated);
     }
 
     public void delete(Long id) {

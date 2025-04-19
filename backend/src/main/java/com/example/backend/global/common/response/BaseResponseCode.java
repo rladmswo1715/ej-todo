@@ -20,15 +20,19 @@ public enum BaseResponseCode {
 
     INTERNAL_ERROR(false, 5000, "서버 오류", HttpStatus.INTERNAL_SERVER_ERROR);
 
-    private final boolean status;
+    private final boolean success;
     private final int code;
     private final String message;
     private final HttpStatus httpStatus;
 
-    BaseResponseCode(boolean status, int code, String message, HttpStatus httpStatus) {
-        this.status = status;
+    BaseResponseCode(boolean success, int code, String message, HttpStatus httpStatus) {
+        this.success = success;
         this.code = code;
         this.message = message;
         this.httpStatus = httpStatus;
+    }
+
+    public boolean getSuccess() {
+        return success;
     }
 }
