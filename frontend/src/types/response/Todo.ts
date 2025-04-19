@@ -4,4 +4,5 @@ export type TTodo = {
   completed: boolean;
   createdAt: Date;
   completedAt: Date | null;
+  order: number;
 };

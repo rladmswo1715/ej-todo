@@ -44,11 +44,13 @@ const TodoItem = ({ todo, onToggle, onDelete, onUpdate }: TodoItemProps) => {
 
   return (
     <div className="flex items-center gap-2 w-full">
-      <Checkbox
-        checked={todo.completed}
-        onChange={() => onToggle(todo.id)}
-        disabled={isEditing}
-      />
+      <div onPointerDown={(e) => e.stopPropagation()}>
+        <Checkbox
+          checked={todo.completed}
+          onChange={() => onToggle(todo.id)}
+          disabled={isEditing}
+        />
+      </div>
 
       {isEditing ? (
         <div className="flex items-center gap-2 w-full">
@@ -62,6 +64,7 @@ const TodoItem = ({ todo, onToggle, onDelete, onUpdate }: TodoItemProps) => {
                 cancelEdit();
               }
             }}
+            onPointerDown={(e) => e.stopPropagation()}
             maxLength={25}
             className="flex-1"
           />
@@ -69,6 +72,7 @@ const TodoItem = ({ todo, onToggle, onDelete, onUpdate }: TodoItemProps) => {
             type="text"
             icon={<CheckOutlined style={{ color: "#52c41a", fontSize: 16 }} />}
             onClick={submitEdit}
+            onPointerDown={(e) => e.stopPropagation()}
             size="small"
           />
         </div>
@@ -83,17 +87,24 @@ const TodoItem = ({ todo, onToggle, onDelete, onUpdate }: TodoItemProps) => {
       )}
 
       {!todo.completed && !isEditing && (
-        <Button type="link" icon={<EditOutlined />} onClick={startEdit} />
+        <Button
+          type="link"
+          icon={<EditOutlined />}
+          onClick={startEdit}
+          onPointerDown={(e) => e.stopPropagation()}
+        />
       )}
       {todo.completed && <Tag color="blue">완료</Tag>}
-      <Popconfirm
-        title="삭제하시겠습니까?"
-        onConfirm={() => onDelete(todo.id)}
-        okText="네"
-        cancelText="아니요"
-      >
-        <Button type="text" danger icon={<DeleteOutlined />} />
-      </Popconfirm>
+      <div onPointerDown={(e) => e.stopPropagation()}>
+        <Popconfirm
+          title="삭제하시겠습니까?"
+          onConfirm={() => onDelete(todo.id)}
+          okText="네"
+          cancelText="아니요"
+        >
+          <Button type="text" danger icon={<DeleteOutlined />} />
+        </Popconfirm>
+      </div>
     </div>
   );
 };

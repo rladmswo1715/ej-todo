@@ -18,5 +18,6 @@ export const useFetchTodos = () => {
   return useQuery<TTodo[]>({
     queryKey: ["todos"],
     queryFn: fetchTodos,
+    select: (data) => [...data].sort((a, b) => a.order - b.order),
   });
 };
