@@ -1,0 +1,8 @@
+CREATE TABLE IF NOT EXISTS todo (
+    id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(50) NOT NULL,
+    completed BOOLEAN NOT NULL DEFAULT FALSE,
+    created_at DATETIME,
+    completed_at DATETIME,
+    todo_order INT NOT NULL
+);
